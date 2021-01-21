@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: master-ui
+  name: master-service
 spec:
   selector:
     matchLabels:
-      run: master-ui
+      run: master-service
   replicas: 1
   template:
     metadata:
       labels:
-        run: master-ui
+        run: master-service
     spec:
       containers:
-      - name: master-ui
-        image: a63c53801777147b1a5608a7bfb83e6c-804081218.ap-south-1.elb.amazonaws.com/testpipconf/master-ui:1-0-2
+      - name: master-service
+        image: a63c53801777147b1a5608a7bfb83e6c-804081218.ap-south-1.elb.amazonaws.com/testpipconf/master-service:1-0-2
         ports:
         - containerPort: 8090
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: master-ui
+  name: master-service
   labels:
-    run: master-ui
+    run: master-service
 spec:
   ports:
   - port: 8090
@@ -31,4 +31,4 @@ spec:
     targetPort: 8090
   type: ClusterIP
   selector:
-    run: master-ui
+    run: master-service
